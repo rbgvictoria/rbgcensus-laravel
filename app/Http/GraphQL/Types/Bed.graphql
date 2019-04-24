@@ -1,0 +1,15 @@
+type Bed {
+  id: ID!
+  bedName: String!
+  bedFullName: String
+  bedCode: String
+  site: String
+  precinctCode: String
+  precinctName: String
+  subprecinctCode: String
+  subprecinctName: String
+  bedType: BedType
+  bedTypeString: String
+  isRestricted: Boolean
+  parent: Bed
+}

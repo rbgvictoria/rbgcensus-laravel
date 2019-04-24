@@ -1,0 +1,4 @@
+type Grid {
+  id: ID!
+  gridCode: String!
+}

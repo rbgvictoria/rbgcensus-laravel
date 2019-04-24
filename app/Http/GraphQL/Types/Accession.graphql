@@ -1,0 +1,10 @@
+type Accession {
+  id: ID!
+  accessionNumber: String! @rename(attribute: "accession_number")
+  collectorName: String @rename(attribute: "collector_name")
+  provenanceHistory: String @rename(attribute: "provenance_history")
+  taxon: Taxon! 
+  provenanceType: ProvenanceType
+  identificationStatus: IdentificationStatus
+
+}

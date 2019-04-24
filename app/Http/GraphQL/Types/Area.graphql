@@ -1,0 +1,8 @@
+type Area {
+  id: ID!
+  localityId: String!
+  areaName: String!
+  areaFullName: String
+  isoCode: String
+  parent: [Area!]
+}

@@ -1,0 +1,5 @@
+type Rank {
+  id: ID!
+  name: String!
+  parent: Rank
+}

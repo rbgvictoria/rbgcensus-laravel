@@ -1,0 +1,6 @@
+type IdentificationStatus {
+  id: ID!
+  code: String
+  name: String!
+  description: String
+}

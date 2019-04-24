@@ -1,0 +1,12 @@
+type Taxon {
+  id: ID!
+  taxonName: String!
+  author: String
+  vernacularName: String
+  hideFromPublic: Boolean
+  rank: Rank
+  parent: Taxon
+  plantType: PlantType
+  naturalDistribution: [Area!]
+  rankString: String
+}

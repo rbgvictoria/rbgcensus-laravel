@@ -1,0 +1,13 @@
+type Plant {
+  id: ID!
+  accessionNumber: String
+  plantNumber: Int!
+  taxonName: String
+  gridCode: String
+  bedName: String
+  site: String
+
+  accession: Accession 
+  grid: Grid 
+  bed: Bed 
+}

@@ -1,0 +1,6 @@
+type ProvenanceType {
+  id: ID!
+  code: String
+  name: String!
+  description: String
+}
