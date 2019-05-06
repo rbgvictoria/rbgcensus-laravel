@@ -5,26 +5,15 @@
 #import ../../app/Http/GraphQL/Types/Grid.graphql
 #import ../../app/Http/GraphQL/Types/IdentificationStatus.graphql
 #import ../../app/Http/GraphQL/Types/Plant.graphql
-#import ../../app/Http/GraphQL/Types/PlantType.graphql
+#import ../../app/Http/GraphQL/Types/PlantFilter.graphql
 #import ../../app/Http/GraphQL/Types/ProvenanceType.graphql
 #import ../../app/Http/GraphQL/Types/Rank.graphql
 #import ../../app/Http/GraphQL/Types/Taxon.graphql
 #import ../../app/Http/GraphQL/Types/Scalars.graphql
 
 type Query {
-    search(
-        taxonName: String @search 
-        family: String @search
-        site: String @search
-        bedName: String @search
-        precinct: String @search 
-        subprecinct: String @search 
-        gridCode: String @search
-        naturalDistributionArea: String @search
-    ): [Plant!]! @paginate(type: "paginator")
-
-    taxa(taxonName: String @contains): [Taxon!]! @paginate(type: "paginator")
-    taxon(id: ID @eq): Taxon @find
+    accessions: [Accession!]! @paginate(type: "paginator")
+    accession(id: ID @eq): Accession @find
 
     beds(bedName: String @contains): [Bed!]! @paginate(type: "paginator")
     bed(id: ID @eq): Bed @find
@@ -32,10 +21,17 @@ type Query {
     grids: [Grid!]! @paginate(type: "paginator")
     grid(id: ID @eq): Grid @find
 
-    accessions: [Accession!]! @paginate(type: "paginator")
-    accesion(id: ID @eq): Accession @find
+    """
+    Search for plants in Royal Botanic Gardens Victoria
+    """
+    plants(
+        filter: PlantFilter
+        sort: String
+    ): [Plant!]! 
+    @paginate(builder: "App\\Models\\Plant@search")
 
-    plants: [Plant!]! @paginate(type: "paginator")
     plant(id: ID @eq): Plant @find
 
+    taxa(taxonName: String @contains): [Taxon!]! @paginate(type: "paginator")
+    taxon(id: ID @eq): Taxon @find
 }

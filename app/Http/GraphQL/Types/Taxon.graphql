@@ -1,12 +1,16 @@
 type Taxon {
   id: ID!
-  taxonName: String!
-  author: String
-  vernacularName: String
-  hideFromPublic: Boolean
+  taxonName: String! @rename(attribute: "taxon_name")
+  authorship: String @rename(attribute: "author")
+  vernacularName: String @rename(attribute: "vernacular_name")
+  isNativeToAustralia: Boolean @rename(attribute: "isAustralianNative")
+  isEndangered: Boolean
+  hideFromPublic: Boolean @rename(attribute: "hide_from_public_display")
   rank: Rank
   parent: Taxon
-  plantType: PlantType
+  children: [Taxon!]
+  higherClassification: [Taxon!]
+  family: Taxon
   naturalDistribution: [Area!]
-  rankString: String
+  accessions: [Accession!] @paginate(type: "paginator")
 }

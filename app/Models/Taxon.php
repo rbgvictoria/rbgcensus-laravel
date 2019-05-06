@@ -2,24 +2,25 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
 use Sofa\Eloquence\Eloquence;
 use Sofa\Eloquence\Mappable;
 
 /**
  * @property integer $id
- * @property integer $rankId
- * @property integer $parentId
- * @property integer $acceptedId
- * @property integer $plantTypeId
- * @property string $createdAt
- * @property string $updatedAt
- * @property string $taxonName
+ * @property integer $rank_id
+ * @property integer $parent_id
+ * @property integer $accepted_id
+ * @property integer $plant_type_id
+ * @property string $created_at
+ * @property string $updated_at
+ * @property string $taxon_name
  * @property string $author
- * @property string $vernacularName
- * @property boolean $hideFromPublicDisplay
- * @property int $lcdSpeciesId
- * @property int $nodeNumber
- * @property int $highestDescendantNodeNumber
+ * @property string $vernacular_name
+ * @property boolean $hide_from_public_display
+ * @property int $lcd_species_id
+ * @property int $node_number
+ * @property int $highest_descendant_node_number
  * @property integer $depth
  * @property Rank $rank
  * @property Taxon $parent
@@ -27,8 +28,16 @@ use Sofa\Eloquence\Mappable;
  * @property PlantType $plantType
  * @property Accession[] $accessions
  * @property Area[] $areas
+ * 
+ * @property Taxon[] $children
+ * @property Taxon[] $higherClassification
+ * @property Taxon $family
+ * @property Classification $classification
+ * 
+ * @property boolean $isAustralianNative
+ * @property boolean $isEndangered
  */
-class Taxon extends BaseModel
+class Taxon extends Model
 {
     use Eloquence, Mappable;
     
@@ -75,6 +84,15 @@ class Taxon extends BaseModel
     {
         return $this->belongsTo('App\Models\Taxon', 'parent_id');
     }
+    
+    /**
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function children()
+    {
+        return $this->hasMany('App\Models\Taxon', 'parent_id', 'id');
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -106,5 +124,62 @@ class Taxon extends BaseModel
     public function areas()
     {
         return $this->belongsToMany('App\Models\Area', 'taxon_areas', 'taxon_id');
+    }
+    
+    /**
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function classification()
+    {
+        return $this->hasOne('App\Models\Classification');
+    }
+    
+    /**
+     * 
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getHigherClassificationAttribute()
+    {
+        return Taxon::where('node_number', '<', $this->node_number)
+                ->where('highest_descendant_node_number', '>=', $this->node_number)
+                ->orderBy('node_number')
+                ->get();
+    }
+    
+    /**
+     * 
+     * @return Taxon
+     */
+    public function getFamilyAttribute()
+    {
+        return Taxon::where('node_number', '<', $this->node_number)
+                ->where('highest_descendant_node_number', '>=', $this->node_number)
+                ->whereHas('rank', function($query) {
+                    $query->where('ranks.name', 'family');
+                })->first();
+    }
+    
+    /**
+     * 
+     * @return boolean
+     */
+    public function getIsAustralianNativeAttribute()
+    {
+        if ($this->plantType && in_array($this->plantType->code, ['#', '&'])) {
+            return true;
+        }
+        return false;
+    }
+    /**
+     * 
+     * @return boolean
+     */
+    public function getIsEndangeredAttribute()
+    {
+        if (in_array($this->plantType && $this->plantType->code, ['#', '!'])) {
+            return true;
+        }
+        return false;
     }
 }

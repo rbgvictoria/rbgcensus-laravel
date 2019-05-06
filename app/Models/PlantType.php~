@@ -1,0 +1,17 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+/**
+ * @property integer $id
+ * @property integer $createdAt
+ * @property integer $updatedAt
+ * @property string $name
+ * @property string $abbreviation
+ */
+class PlantType extends Model
+{
+    protected $table = 'plant_types';
+}

@@ -1,12 +1,6 @@
 type Plant {
   id: ID!
-  accessionNumber: String
-  plantNumber: Int!
-  taxonName: String
-  gridCode: String
-  bedName: String
-  site: String
-
+  plantNumber: Int! @rename(attribute: "plant_number")
   accession: Accession 
   grid: Grid 
   bed: Bed 

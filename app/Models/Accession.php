@@ -2,22 +2,24 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
+
 /**
  * @property integer $id
- * @property integer $provenanceTypeId
- * @property integer $identificationStatusId
- * @property integer $taxonId
- * @property string $createdAt
- * @property string $updatedAt
- * @property string $accessionNumber
- * @property string $collectorName
- * @property string $provenanceHistory
- * @property Taxa $taxon
+ * @property integer $provenance_type_id
+ * @property integer $identification_status_id
+ * @property integer $taxon_id
+ * @property string $created_at
+ * @property string $updated_at
+ * @property string $accession_number
+ * @property string $collector_name
+ * @property string $provenance_history
+ * @property Taxa $taxa
  * @property ProvenanceType $provenanceType
  * @property IdentificationStatus $identificationStatus
  * @property Plant[] $plants
  */
-class Accession extends BaseModel
+class Accession extends Model
 {
     /**
      * The "type" of the auto-incrementing ID.

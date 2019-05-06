@@ -1,5 +1,5 @@
 type Rank {
   id: ID!
-  name: String!
+  label: String! @rename(attribute: "name")
   parent: Rank
 }
