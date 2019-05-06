@@ -1,4 +1,5 @@
 type Grid {
   id: ID!
-  gridCode: String!
+  gridCode: String! @rename(attribute: "code")
+  plants: [Plant!]
 }

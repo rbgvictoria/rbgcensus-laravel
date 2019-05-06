@@ -2,15 +2,29 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
+
 /**
- * @property integer $id
- * @property datetime $createdAt
- * @property datetime $updatedAt
+ * @property int $id
+ * @property string $created_at
+ * @property string $updated_at
  * @property string $code
  * @property string $label
  * @property string $description
+ * @property Accession[] $accessions
  */
-class ProvenanceType extends BaseModel
+class ProvenanceType extends Model
 {
-    protected $table = 'provenance_types';
+    /**
+     * @var array
+     */
+    protected $fillable = ['created_at', 'updated_at', 'code', 'label', 'description'];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function accessions()
+    {
+        return $this->hasMany('App\Models\Accession');
+    }
 }

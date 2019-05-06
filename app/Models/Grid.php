@@ -2,19 +2,20 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
 use Sofa\Eloquence\Eloquence;
 use Sofa\Eloquence\Mappable;
 
 /**
  * @property integer $id
- * @property string $createdAt
- * @property string $updatedAt
+ * @property string $created_at
+ * @property string $updated_at
  * @property string $code
  * @property string $geom
- * @property string $geomMga
+ * @property string $geom_mga
  * @property Plant[] $plants
  */
-class Grid extends BaseModel
+class Grid extends Model
 {
     use Eloquence, Mappable;
     

@@ -1,0 +1,5 @@
+type Collection {
+  id: ID!
+  collectionName: String @rename(attribute: "name")
+  plants: [Plant!] @paginate()
+}

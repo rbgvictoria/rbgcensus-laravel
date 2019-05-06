@@ -1,0 +1,18 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+/**
+ * @property integer $id
+ * @property datetime $createdAt
+ * @property datetime $updatedAt
+ * @property string $code
+ * @property string $label
+ * @property string $description
+ */
+class ProvenanceType extends Model
+{
+    protected $table = 'provenance_types';
+}

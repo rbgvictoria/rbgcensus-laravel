@@ -2,44 +2,31 @@
 
 namespace App\Models;
 
-use Sofa\Eloquence\Eloquence;
-use Sofa\Eloquence\Mappable;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property integer $id
- * @property integer $parentId
- * @property integer $bedTypeId
- * @property string $createdAt
- * @property string $updatedAt
- * @property string $bedName
- * @property string $bedCode
- * @property string $precinctName
- * @property boolean $isRestricted
+ * @property integer $parent_id
+ * @property integer $bed_type_id
+ * @property string $created_at
+ * @property string $updated_at
+ * @property string $bed_name
+ * @property string $bed_full_name
+ * @property string $bed_code
+ * @property boolean $is_restricted
  * @property string $location
- * @property int $precinctCode
- * @property int $subprecinctCode
- * @property string $subprecinctName
- * @property int $nodeNumber
- * @property int $highestDescendantNodeNumber
+ * @property int $node_number
+ * @property int $highest_descendant_node_number
  * @property integer $depth
  * @property Bed $parent
  * @property BedType $bedType
  * @property Plant[] $plants
+ * 
+ * @property string $precinctName
+ * @property string $subprecinctName
  */
-class Bed extends BaseModel
+class Bed extends Model
 {
-    use Eloquence, Mappable;
-    
-    protected $maps = [
-        'site' => 'location',
-        'bedTypeString' => 'bed_type.name',
-    ];
-    
-    protected $appends = [
-        'site',
-        'bedTypeString'
-    ];
-    
     /**
      * The "type" of the auto-incrementing ID.
      * 
@@ -75,4 +62,46 @@ class Bed extends BaseModel
     {
         return $this->hasMany('App\Models\Plant');
     }
+
+    /**
+     *
+     * @return Bed
+     */
+    public function getSiteAttribute()
+    {
+        return Bed::where('node_number', '<=', $this->node_number)
+                ->where('highest_descendant_node_number', '>=', $this->node_number)
+                ->whereHas('bed_type', function($query) {
+                    $query->where('bed_types.name', 'location');
+                })->first();
+    }
+
+    /**
+     *
+     * @return Bed
+     */
+    public function getPrecinctAttribute()
+    {
+        return Bed::where('node_number', '<=', $this->node_number)
+                ->where('highest_descendant_node_number', '>=', $this->node_number)
+                ->whereHas('bed_type', function($query) {
+                    $query->where('bed_types.name', 'precinct');
+                })->first();
+    }
+
+    /**
+     *
+     * @return Bed
+     */
+    public function getSubprecinctAttribute()
+    {
+        return Bed::where('node_number', '<=', $this->node_number)
+                ->where('highest_descendant_node_number', '>=', $this->node_number)
+                ->whereHas('bed_type', function($query) {
+                    $query->where('bed_types.name', 'subprecinct');
+                })->first();
+    }
+
+
+    
 }

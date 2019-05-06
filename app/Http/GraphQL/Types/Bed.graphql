@@ -1,15 +1,12 @@
 type Bed {
   id: ID!
-  bedName: String!
-  bedFullName: String
-  bedCode: String
-  site: String
-  precinctCode: String
-  precinctName: String
-  subprecinctCode: String
-  subprecinctName: String
+  bedName: String! @rename(attribute: "bed_name")
+  bedCode: String @rename(attribute: "bed_code")
+  bedFullName: String @rename(attribute: "bed_full_name")
+  isRestricted: Boolean @rename(attribute: "is_restricted")
   bedType: BedType
-  bedTypeString: String
-  isRestricted: Boolean
-  parent: Bed
+  site: Bed
+  precinct: Bed
+  subprecinct: Bed
+  plants: [Plant!]!
 }

@@ -1,0 +1,11 @@
+input PlantFilter {
+    accessionNumber: String
+    taxonName: String 
+    family: String
+    site: String
+    bedName: String
+    precinct: String 
+    subprecinct: String 
+    gridCode: String
+    naturalDistributionArea: String
+}

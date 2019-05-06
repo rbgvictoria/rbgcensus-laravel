@@ -1,5 +1,0 @@
-type PlantType {
-  id: ID!
-  name: String!
-  abbreviation: String
-}

@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+/**
+ * @property integer $id
+ * @property datetime $createdAt
+ * @property datetime $updatedAt
+ * @property string $name
+ * @property integer $sortOrder
+ * 
+ * @property Rank parent
+ */
+class Rank extends Model
+{
+    protected $table = 'ranks';
+    
+    public function parent()
+    {
+        return $this->belongsTo('App\Models\Rank', 'parent_id');
+    }
+}

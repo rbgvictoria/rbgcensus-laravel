@@ -2,26 +2,36 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
 use Sofa\Eloquence\Eloquence;
 use Sofa\Eloquence\Mappable;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
+
+use App\PlantSearch\PlantSearch;
+
+
 /**
  * @property integer $id
- * @property integer $accessionId
- * @property integer $gridId
- * @property integer $bedId
- * @property string $createdAt
- * @property string $updatedAt
- * @property int $plantNumber
- * @property string $datePlanted
+ * @property integer $accession_id
+ * @property integer $grid_id
+ * @property integer $bed_id
+ * @property string $created_at
+ * @property string $updated_at
+ * @property int $plant_number
+ * @property string $date_planted
+ * 
  * @property Accession $accession
  * @property Grid $grid
  * @property Bed $bed
  * @property PlantAttribute[] $plantAttributes
  * @property Deaccession[] $deaccessions
  * @property Collection[] $collections
+ * 
+ * @property string $accessionNumber
  */
-class Plant extends BaseModel
+class Plant extends Model
 {
     use Eloquence, Mappable;
     
@@ -100,4 +110,12 @@ class Plant extends BaseModel
     {
         return $this->belongsToMany('App\Models\Collection', 'collection_plants');
     }
+    
+    public function search($root, array $args): Builder
+    {
+        $filter = isset($args['filter']) ? $args['filter'] : null;
+        $sort = isset($args['sort']) ? $args['sort'] : 'taxonName';
+        return PlantSearch::apply($filter, $sort);
+    }
+
 }

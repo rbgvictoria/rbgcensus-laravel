@@ -1,8 +1,8 @@
 type Area {
   id: ID!
-  localityId: String!
-  areaName: String!
-  areaFullName: String
-  isoCode: String
+  localityId: String! @rename(attribute: "locality_id")
+  areaName: String! @rename(attribute: "area_name")
+  areaFullName: String @rename(attribute: "area_full_name")
+  isoCode: String @rename(attribute: "iso_code")
   parent: [Area!]
 }

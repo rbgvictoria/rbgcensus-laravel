@@ -2,23 +2,38 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
+
 /**
- * @property integer $id 
- * @property datetime $createdAt 
- * @property datetime $updatedAt 
- * @property string $value 
- * 
+ * @property int $id
+ * @property integer $plant_id
+ * @property integer $attribute_id
+ * @property string $created_at
+ * @property string $updated_at
+ * @property string $value
+ * @property Plant $plant
  * @property Attribute $attribute
  */
-class PlantAttribute extends BaseModel
+class PlantAttribute extends Model
 {
-    protected $table = 'plant_attributes';
-    
     /**
-     * @return \Illuminate\Database\Eloquent\BelongsTo
+     * @var array
+     */
+    protected $fillable = ['plant_id', 'attribute_id', 'created_at', 'updated_at', 'value'];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function plant()
+    {
+        return $this->belongsTo('App\Models\Plant');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function attribute()
     {
-        return $this->belongsTo('App\Models\Attribute', 'attribute_id');
+        return $this->belongsTo('App\Models\Attribute');
     }
 }

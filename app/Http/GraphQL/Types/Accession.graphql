@@ -6,5 +6,5 @@ type Accession {
   taxon: Taxon! 
   provenanceType: ProvenanceType
   identificationStatus: IdentificationStatus
-
+  plants: [Plant!]!
 }
