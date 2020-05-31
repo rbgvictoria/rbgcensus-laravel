@@ -22,6 +22,10 @@ use OpenApi\Annotations as OA;
  *   ),
  *   @OA\Server(
  *     description="",
+ *     url="http://census.rbg.vic.gov.au/api"
+ *   ),
+ *   @OA\Server(
+ *     description="",
  *     url="http://rbgcensus-laravel.test/api"
  *   ),
  *   @OA\Components(
