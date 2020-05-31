@@ -22,7 +22,7 @@ use OpenApi\Annotations as OA;
  *   ),
  *   @OA\Server(
  *     description="",
- *     url="http://census.rbg.vic.gov.au/api"
+ *     url="https://census.rbg.vic.gov.au/api"
  *   ),
  *   @OA\Server(
  *     description="",
