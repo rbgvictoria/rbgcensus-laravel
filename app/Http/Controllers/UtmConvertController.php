@@ -135,4 +135,46 @@ class UtmConvertController extends ApiController
         return $this->fractal->item($data[0], new UtmToLatLngTransformer(), 'coordinates');
 
     }
+
+    /**
+     * Batch convert
+     * 
+     * @OA\Post(
+     *   path="/utmBatchConvert",
+     *   summary="Convert UTM coordinates to decimal latitude and longitude",
+     *   @OA\RequestBody(
+     *     request="UtmCoordinates",
+     *     description="UTM coordinates to be converted to latitude and longitude",
+     *     required=true,
+     *     @OA\JsonContent(
+     *       type="object",
+     *       @OA\Property(
+     *         property="items",
+     *         type="array",
+     *         @OA\Items(ref="#/components/schemas/UtmCoordinates")
+     *       )
+     *     )
+     *   ),
+     *   @OA\Response(
+     *     response="200",
+     *     description="Successful response.",
+     *     @OA\MediaType(
+     *       mediaType="application/json",
+     *       @OA\Schema(
+     *         type="array",
+     *         @OA\Items(ref="#/components/schemas/UtmLatLng")
+     *       )
+     *     )
+     *   )
+     * )
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \League\Fractal\Resource\Collection
+     */
+    public function batchConvert(Request $request)
+    {
+        $items = $request->input('items');
+        $data = UtmToLatLng::batchConvert($items);
+        return $this->fractal->collection($data, new UtmToLatLngTransformer(), 'coordinates');
+    }
 }

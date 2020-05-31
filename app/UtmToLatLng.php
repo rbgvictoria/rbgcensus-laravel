@@ -36,7 +36,18 @@ class UtmToLatLng {
     return DB::select($sql);
   }
 
-  private static function getInputSRS ($grid,$zone) {
+  public static function batchConvert($items)
+  {
+    $ret = [];
+    foreach ($items as $item) {
+      $coords = self::convert($item['grid'], $item['zone'], $item['easting'], $item['northing']);
+      $ret[] = $coords[0];
+    }
+    return $ret;
+  }
+
+  private static function getInputSRS ($grid,$zone) 
+  {
     $prefix = array(
         'AMG' => '202',
         'AMG66' => '202',
