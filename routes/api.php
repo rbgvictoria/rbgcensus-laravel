@@ -42,3 +42,4 @@ Route::get('/collections', 'CollectionController@index')->name('api.collections.
 Route::get('/collections/{collection}', 'CollectionController@show')->name('api.collections.show');
 Route::get('/collections/{collection}/plants', 'CollectionController@listPlants')->name('api.collection.plants.list');
 
+Route::match(['get', 'post'], '/utmconvert', 'UtmConvertController@convert')->name('api.utmconvert.convert');

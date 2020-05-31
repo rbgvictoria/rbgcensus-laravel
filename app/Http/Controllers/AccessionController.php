@@ -10,7 +10,7 @@ class AccessionController extends ApiController
 {
     /**
      * @OA\Get(
-     *   path="/accesions",
+     *   path="/accessions",
      *   summary="List accessions",
      *   @OA\Parameter(
      *     ref="#/components/parameters/include"
